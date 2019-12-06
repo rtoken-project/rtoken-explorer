@@ -22,7 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "rsync -avz --delete build/* maia:/srv/http/apps/rDaiExplorer/."
+    "deploy": "rsync -avz --delete build/* maia:/srv/http/apps/rdaiexplorer/."
   },
   "eslintConfig": {
     "extends": "react-app"

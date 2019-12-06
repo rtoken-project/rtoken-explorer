@@ -1,7 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { ForceGraph2D } from 'react-force-graph';
-import '../css/App.css';
 
 import graphql from '../graphql';
 
@@ -28,6 +27,7 @@ const App = (props) => {
 		id:      account.id,
 		balance: account.balance,
 		size:    Math.log(1+account.balance),
+		color:   "#CCCCCC",
 	}))
 
 	const links = [].concat(
@@ -37,12 +37,14 @@ const App = (props) => {
 				target: loan.recipient.id,
 				amount: loan.amount,
 				size:   Math.log(loan.amount),
+				// color:   "#CCCCCC",
 			})),
 			...account.loansReceived.map(loan => ({
 				source:  loan.owner.id,
 				target:  account.id,
 				amount:  loan.amount,
 				size:    Math.log(loan.amount),
+				// color:   "#CCCCCC",
 			})),
 		]))
 	)
