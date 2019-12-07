@@ -14,7 +14,17 @@ code
 }
 
 /* rDai Explorer specifig */
-body
+.navbar
 {
-	/* background-color: #000000; */
+	position:      absolute;
+	width:         100vw;
+	z-index:       1000000;
+	border-bottom: 1px solid #222222;
+}
+
+.navbar .navLogo
+{
+	height:        20px;
+	margin-bottom: 5px;
+	margin-right:  10px;
 }

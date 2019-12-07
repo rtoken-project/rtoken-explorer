@@ -19,7 +19,7 @@ import rDaiLogo from '../assets/rDai.svg';
 class Navbar extends React.Component
 {
 	state = {
-		isOpen: true
+		isOpen: false
 	};
 
 	toggleCollapse()
@@ -29,24 +29,26 @@ class Navbar extends React.Component
 
 	render()
 	{
-		// <img src={rDaiLogo} alt="logo" />
 		return (
-			<MDBNavbar color="black" dark expand="md">
+			<MDBNavbar color='black' dark expand='md'>
 				<MDBNavbarBrand>
-					<strong className="white-text">rDai explorer</strong>
+					<img src={rDaiLogo} alt='logo' className='navLogo'/>
+					<strong className='white-text'>
+					rDai explorer
+					</strong>
 				</MDBNavbarBrand>
-				<MDBNavbarToggler onClick={this.toggleCollapse} />
-				<MDBCollapse id="navbarCollapse" isOpen={this.state.isOpen} navbar>
+				<MDBNavbarToggler onClick={this.toggleCollapse.bind(this)} />
+				<MDBCollapse id='navbarCollapse' isOpen={this.state.isOpen} navbar>
 					<MDBNavbarNav left>
 						<MDBNavItem>
 							<MDBDropdown>
 								<MDBDropdownToggle nav caret>
-									<span className="mr-2">Network</span>
+									<span className='mr-2'>Network</span>
 								</MDBDropdownToggle>
 								<MDBDropdownMenu>
 									{
 										Object.entries(this.props.networks).map(([key, value]) =>
-											<MDBNavLink key={key} link to={ `/explorer/${key}` } className="p-0">
+											<MDBNavLink key={key} link to={ `/explorer/${key}` } className='p-0'>
 												<MDBDropdownItem>
 													{key}
 												</MDBDropdownItem>
@@ -57,14 +59,14 @@ class Navbar extends React.Component
 							</MDBDropdown>
 						</MDBNavItem>
 						<MDBNavItem>
-							<MDBNavLink link to="/about-us">About Us</MDBNavLink>
+							<MDBNavLink link to='/about-us'>About Us</MDBNavLink>
 						</MDBNavItem>
 					</MDBNavbarNav>
 					<MDBNavbarNav right>
 						<MDBNavItem>
 							<MDBFormInline waves>
-								<div className="md-form my-0">
-									<input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
+								<div className='md-form my-0'>
+									<input className='form-control mr-sm-2' type='text' placeholder='Search' aria-label='Search' />
 								</div>
 							</MDBFormInline>
 						</MDBNavItem>

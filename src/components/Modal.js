@@ -11,7 +11,7 @@ const Modal = (props) => {
 
 	// render
 	return (
-		<MDBModal isOpen={state.modal} fullHeight position="right">
+		<MDBModal isOpen={state.modal} fullHeight position='right'>
 			<MDBModalHeader >MDBModal title</MDBModalHeader>
 			<MDBModalBody>
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
