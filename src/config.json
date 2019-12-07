@@ -1,0 +1,13 @@
+{
+	"networks":
+	{
+		"rDai":
+		{
+			"endpoint": "https://api.thegraph.com/subgraphs/name/amxx/rdai"
+		},
+		"rSai":
+		{
+			"endpoint": "https://api.thegraph.com/subgraphs/name/amxx/rsai"
+		}
+	}
+}
