@@ -20,7 +20,7 @@ const GraphView = (props) => {
 			1000
 		);
 		props.zoomCallback && props.zoomCallback(node);
-	}, [fgRef, state]);
+	}, [fgRef, props, state]);
 
 	// Reset view
 	const handleReset = React.useCallback(e => {
@@ -34,7 +34,7 @@ const GraphView = (props) => {
 			state.anchor = null;
 			props.resetCallback && props.resetCallback();
 		}
-	}, [fgRef, state]);
+	}, [fgRef, props, state]);
 
 	// render
 	return <ForceGraph3D
@@ -54,6 +54,7 @@ const GraphView = (props) => {
 		onNodeClick                       = { handleZoom }
 		onLinkClick                       = { handleReset }
 		onBackgroundClick                 = { handleReset }
+		backgroundColor                   = "#000000"
 	/>;
 }
 
