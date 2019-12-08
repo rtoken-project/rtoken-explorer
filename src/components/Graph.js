@@ -1,14 +1,15 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import { EventEmitter } from 'fbemitter';
 
 import GraphView from './GraphView';
+import SideView  from './SideView';
+import Loading   from './Loading';
 
 import graphql from '../graphql';
 
 const Graph = (props) => {
-	// const [ state ] = React.useState({ node: null, modal: true });
-	const zoomCallback  = null; //React.useCallback(node => { state.node = node; }, [state]);
-	const resetCallback = null; //React.useCallback(()   => { state.node = null; }, [state]);
+	const emitter = new EventEmitter();
 
 	// Query subgraph
 	const { data, loading, error } = useQuery(
@@ -22,7 +23,7 @@ const Graph = (props) => {
 	);
 
 	// Handle errors
-	if (loading) { return `Loading`;         }
+	if (loading) { return <Loading/>;        }
 	if (error  ) { return `Error! ${error}`; }
 
 	// Format data - nodes
@@ -49,11 +50,15 @@ const Graph = (props) => {
 
 	// render
 	return (
-		<GraphView
-			data          = {{ nodes, links }}
-			zoomCallback  = { zoomCallback }
-			resetCallback = { resetCallback }
-		/>
+		<>
+			<GraphView
+				data    = {{ nodes, links }}
+				emitter = { emitter }
+			/>
+			<SideView
+				emitter = { emitter }
+			/>
+		</>
 	);
 };
 

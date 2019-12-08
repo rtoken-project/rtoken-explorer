@@ -14,17 +14,55 @@ code
 }
 
 /* rDai Explorer specifig */
+body
+{
+	color:            #FFFFFF;
+	background-color: #111111;
+	overflow:         hidden;
+}
+
 .navbar
 {
-	position:      absolute;
-	width:         100vw;
-	z-index:       1000000;
-	border-bottom: 1px solid #222222;
+	width:            100vw;
+	z-index:          1000000;
+	border-bottom:    1px solid #222222;
 }
 
 .navbar .navLogo
 {
-	height:        20px;
-	margin-bottom: 5px;
-	margin-right:  10px;
+	height:           20px;
+	margin-bottom:    5px;
+	margin-right:     10px;
+}
+
+.core
+{
+	padding-top:      58px;
+}
+
+.modal
+{
+	width:            30vw;
+	height:           100vh;
+	left:             unset;
+	right:            0;
+	top:              0;
+	padding-top:      58px;
+}
+.modal .modal-dialog
+{
+	margin:           0;
+}
+.modal .modal-dialog .modal-content
+{
+	border-top:       1px solid;
+	border-left:      1px solid;
+	border-bottom:    1px solid;
+	border-color:     #000000;
+	border-radius:    0.25rem 0 0 0.25rem;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.modal .modal-dialog .modal-content .modal-header
+{
+	border-color:     #000000;
 }

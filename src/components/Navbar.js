@@ -30,7 +30,7 @@ class Navbar extends React.Component
 	render()
 	{
 		return (
-			<MDBNavbar color='black' dark expand='md'>
+			<MDBNavbar color='black' dark expand='md' fixed='top'>
 				<MDBNavbarBrand>
 					<img src={rDaiLogo} alt='logo' className='navLogo'/>
 					<strong className='white-text'>

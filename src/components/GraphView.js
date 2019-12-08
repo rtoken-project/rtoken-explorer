@@ -19,7 +19,8 @@ const GraphView = (props) => {
 			{ x: node.x,             y: node.y,             z: node.z             },
 			1000
 		);
-		props.zoomCallback && props.zoomCallback(node);
+		props.emitter.emit('viewNode', node.details);
+
 	}, [fgRef, props, state]);
 
 	// Reset view
@@ -32,7 +33,7 @@ const GraphView = (props) => {
 				1000
 			);
 			state.anchor = null;
-			props.resetCallback && props.resetCallback();
+			props.emitter.emit('viewNode', null);
 		}
 	}, [fgRef, props, state]);
 
@@ -54,7 +55,7 @@ const GraphView = (props) => {
 		onNodeClick                       = { handleZoom }
 		onLinkClick                       = { handleReset }
 		onBackgroundClick                 = { handleReset }
-		backgroundColor                   = "#000000"
+		backgroundColor                   = "#111111"
 	/>;
 }
 

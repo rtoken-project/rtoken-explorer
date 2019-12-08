@@ -11,12 +11,12 @@ import config from '../config';
 class Core extends React.Component
 {
 	state = {
-		client: null
+		client:   null,
 	}
 
 	componentDidMount()
 	{
-		this.componentWillReceiveProps(this.props)
+		this.componentWillReceiveProps(this.props);
 	}
 
 	componentWillReceiveProps(newProps)
@@ -37,7 +37,7 @@ class Core extends React.Component
 					<Graph/>
 				</ApolloProvider>
 			:
-				<p>Loading</p>
+				<div className='core'>Loading</div>
 		);
 	}
 }
