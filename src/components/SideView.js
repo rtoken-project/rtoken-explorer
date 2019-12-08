@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 class SideView extends React.Component
 {
 	state = {
+		view: false,
 		data: null,
 	}
 
@@ -11,7 +12,7 @@ class SideView extends React.Component
 	{
 		this.subscription = this.props.emitter.addListener(
 			'viewNode',
-			(data) => { this.setState({ data }) }
+			(data) => { this.setState({ data, view: !!data }) }
 		);
 	}
 
@@ -25,7 +26,8 @@ class SideView extends React.Component
 		return (
 			<>
 				<Modal
-					show={ Boolean(this.state.data) }
+					show={ this.state.view }
+					onHide={ () => this.setState({ view: false }) }
 					autoFocus={false}
 					backdrop={false}
 					centered
@@ -34,7 +36,7 @@ class SideView extends React.Component
 					{
 						this.state.data &&
 						<>
-							<Modal.Header>
+							<Modal.Header closeButton>
 								<Modal.Title>
 									Account details
 								</Modal.Title>
