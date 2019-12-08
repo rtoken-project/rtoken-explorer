@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+	MDBIcon,
 	MDBNavbar,
 	MDBNavbarBrand,
 	MDBNavbarNav,
@@ -11,7 +12,7 @@ import {
 	MDBDropdown,
 	MDBDropdownToggle,
 	MDBDropdownMenu,
-	MDBDropdownItem
+	MDBDropdownItem,
 } from 'mdbreact';
 
 import rDaiLogo from '../assets/rDai.svg';
@@ -41,22 +42,7 @@ class Navbar extends React.Component
 				<MDBCollapse id='navbarCollapse' isOpen={this.state.isOpen} navbar>
 					<MDBNavbarNav left>
 						<MDBNavItem>
-							<MDBDropdown>
-								<MDBDropdownToggle nav caret>
-									<span className='mr-2'>Network</span>
-								</MDBDropdownToggle>
-								<MDBDropdownMenu>
-									{
-										Object.entries(this.props.networks).map(([key, value]) =>
-											<MDBNavLink key={key} link to={ `/explorer/${key}` } className='p-0'>
-												<MDBDropdownItem>
-													{key}
-												</MDBDropdownItem>
-											</MDBNavLink>
-										)
-									}
-								</MDBDropdownMenu>
-							</MDBDropdown>
+							<MDBNavLink link to='/Overview'>Overview</MDBNavLink>
 						</MDBNavItem>
 						<MDBNavItem>
 							<MDBNavLink link to='/about-us'>About Us</MDBNavLink>
@@ -69,6 +55,26 @@ class Navbar extends React.Component
 									<input className='form-control mr-sm-2' type='text' placeholder='Search' aria-label='Search' />
 								</div>
 							</MDBFormInline>
+						</MDBNavItem>
+						<MDBNavItem>
+							<MDBDropdown>
+								<MDBDropdownToggle nav caret>
+									<MDBIcon icon="globe" />
+								</MDBDropdownToggle>
+								<MDBDropdownMenu className="dropdown-default">
+									{
+										Object.entries(this.props.networks).map(([key, value]) =>
+											<MDBDropdownItem
+												key={key}
+												href="#!"
+												onClick={() => this.props.emitter.emit('switchNetwork', key) }
+											>
+												{key}
+											</MDBDropdownItem>
+										)
+									}
+								</MDBDropdownMenu>
+							</MDBDropdown>
 						</MDBNavItem>
 					</MDBNavbarNav>
 				</MDBCollapse>

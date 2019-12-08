@@ -1,6 +1,5 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { EventEmitter } from 'fbemitter';
 
 import GraphView from './GraphView';
 import SideView  from './SideView';
@@ -8,9 +7,7 @@ import Loading   from './Loading';
 
 import graphql from '../graphql';
 
-const Graph = (props) => {
-	const emitter = new EventEmitter();
-
+const Overview = (props) => {
 	// Query subgraph
 	const { data, loading, error } = useQuery(
 		graphql.viewNodes,
@@ -53,13 +50,13 @@ const Graph = (props) => {
 		<>
 			<GraphView
 				data    = {{ nodes, links }}
-				emitter = { emitter }
+				emitter = { props.emitter }
 			/>
 			<SideView
-				emitter = { emitter }
+				emitter = { props.emitter }
 			/>
 		</>
 	);
 };
 
-export default Graph;
+export default Overview;

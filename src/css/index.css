@@ -51,6 +51,7 @@ body
 }
 .modal .modal-dialog
 {
+	max-width:        unset;
 	margin:           0;
 }
 .modal .modal-dialog .modal-content
