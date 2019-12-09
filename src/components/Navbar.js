@@ -20,12 +20,25 @@ import rDaiLogo from '../assets/rDai.svg';
 class Navbar extends React.Component
 {
 	state = {
-		isOpen: false
+		isOpen: false,
+		search: '',
 	};
 
 	toggleCollapse()
 	{
 		this.setState({ isOpen: !this.state.isOpen });
+	}
+
+	updateSearch(ev)
+	{
+		this.setState({ search: ev.target.value });
+	}
+
+	submit(event)
+	{
+		event.preventDefault();
+		const address = this.state.search; // TODO: verify address / resolve ENS
+		this.props.emitter.emit('goTo', `/nodeview/${address}`);
 	}
 
 	render()
@@ -50,9 +63,9 @@ class Navbar extends React.Component
 					</MDBNavbarNav>
 					<MDBNavbarNav right>
 						<MDBNavItem>
-							<MDBFormInline waves>
+							<MDBFormInline waves onSubmit={ this.submit.bind(this) }>
 								<div className='md-form my-0'>
-									<input className='form-control mr-sm-2' type='text' placeholder='Search' aria-label='Search' />
+									<input type='text' placeholder='Search' aria-label='Search' onChange={ this.updateSearch.bind(this) } className='form-control mr-sm-2'/>
 								</div>
 							</MDBFormInline>
 						</MDBNavItem>

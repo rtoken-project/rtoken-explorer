@@ -1,23 +1,15 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import GraphView from './GraphView';
-import SideView  from './SideView';
-import Loading   from './Loading';
+import OverviewGraph from './OverviewGraph';
+import OverviewModal from './OverviewModal';
+import Loading       from './Loading';
 
 import graphql from '../graphql';
 
 const Overview = (props) => {
 	// Query subgraph
-	const { data, loading, error } = useQuery(
-		graphql.viewNodes,
-		{
-			variables:
-			{
-				address: props.address
-			}
-		}
-	);
+	const { data, loading, error } = useQuery(graphql.viewNodes);
 
 	// Handle errors
 	if (loading) { return <Loading/>;        }
@@ -29,7 +21,6 @@ const Overview = (props) => {
 		balance: account.balance,
 		group:   (account.loansOwned.length > 0 ? 0x1 : 0x0) | (account.loansReceived.length > 0 ? 0x2 : 0x0),
 		details: account,
-		// color:   "#CCCCCC",
 	}));
 
 	// Format data - links
@@ -40,7 +31,6 @@ const Overview = (props) => {
 				target:  loan.recipient.id,
 				amount:  loan.amount,
 				details: loan,
-				// color:   "#CCCCCC",
 			})),
 		)
 	);
@@ -48,11 +38,11 @@ const Overview = (props) => {
 	// render
 	return (
 		<>
-			<GraphView
+			<OverviewGraph
 				data    = {{ nodes, links }}
 				emitter = { props.emitter }
 			/>
-			<SideView
+			<OverviewModal
 				emitter = { props.emitter }
 			/>
 		</>

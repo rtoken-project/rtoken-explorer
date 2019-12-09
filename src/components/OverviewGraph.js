@@ -1,17 +1,18 @@
 import React from 'react';
 import { ForceGraph3D } from 'react-force-graph';
 
-const GraphView = (props) => {
+const OverviewGraph = (props) => {
 	const fgRef     = React.useRef();
-	const [ state ] = React.useState({ anchor: null });
+	const [ state ] = React.useState({ id:null, anchor: null });
 
-	// Zoom view
-	const handleZoom = React.useCallback(node => {
-		// save previous viewpoint
+	// zoom view
+	const viewZoom = React.useCallback(node => {
+		// save state
 		if (!state.anchor)
 		{
 			state.anchor = fgRef.current.cameraPosition();
 		}
+		state.id = node.id;
 		// move camera
 		const distRatio = 1 + 50 / Math.hypot(node.x, node.y, node.z);
 		fgRef.current.cameraPosition(
@@ -23,25 +24,40 @@ const GraphView = (props) => {
 
 	}, [fgRef, props, state]);
 
-	// Reset view
-	const handleReset = React.useCallback(e => {
+	// reset view
+	const viewReset = React.useCallback(() => {
 		if (state.anchor)
 		{
+			// reset camera
 			fgRef.current.cameraPosition(
 				{ x: state.anchor.x, y: state.anchor.y, z: state.anchor.z },
 				state.anchor.lookAt,
 				1000
 			);
+			// reset state
 			state.anchor = null;
+			state.id     = null;
 			props.emitter.emit('viewNode', null);
 		}
 	}, [fgRef, props, state]);
+
+	// handler
+	const handleClick = React.useCallback(node => {
+		if (!node || node.id === state.id)
+		{
+			viewReset(node);
+		}
+		else
+		{
+			viewZoom(node);
+		}
+	}, [state, viewZoom, viewReset]);
 
 	// render
 	return <ForceGraph3D
 		ref                               = { fgRef }
 		graphData                         = { props.data }
-		enableNodeDrag                    = {false}
+		enableNodeDrag                    = { false }
 		nodeLabel                         = { n => n.id }
 		nodeVal                           = { n => Math.log(1+n.balance) }
 		nodeAutoColorBy                   = { n => n.group }
@@ -52,11 +68,11 @@ const GraphView = (props) => {
 		linkDirectionalParticles          = { l => Math.log(1+l.amount) }
 		linkDirectionalParticleWidth      = { l => Math.log(1+Math.log(1+l.amount)) }
 		linkDirectionalParticleResolution = { 8 }
-		onNodeClick                       = { handleZoom }
-		onLinkClick                       = { handleReset }
-		onBackgroundClick                 = { handleReset }
+		onNodeClick                       = { (node) => handleClick(node) }
+		onLinkClick                       = { (link) => handleClick(null) }
+		onBackgroundClick                 = { ()     => handleClick(null) }
 		backgroundColor                   = "#111111"
 	/>;
 }
 
-export default GraphView;
+export default OverviewGraph;

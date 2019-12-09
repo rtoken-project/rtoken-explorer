@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 
-class SideView extends React.Component
+class OverviewModal extends React.Component
 {
 	state = {
 		view: false,
@@ -43,7 +43,7 @@ class SideView extends React.Component
 							</Modal.Header>
 							<Modal.Body>
 								<ul>
-									<li>Address: { this.state.data.id }</li>
+									<li>Address: <a href="#" onClick={() => { this.props.emitter.emit('goTo', `/nodeview/${this.state.data.id}`) }}>{ this.state.data.id }</a></li>
 									<li>Balance: { this.state.data.balance }</li>
 									<li>Hat:     { this.state.data.hat ? this.state.data.hat.id : 'unset' }</li>
 									{
@@ -53,7 +53,7 @@ class SideView extends React.Component
 												<ul>
 												{
 													this.state.data.loansOwned.map(loan =>
-															<li>Recipient: {loan.recipient.id} ({loan.amount} rDai)</li>
+														<li>Recipient: <a href="#" onClick={() => { this.props.emitter.emit('goTo', `/nodeview/${loan.recipient.id}`) }}>{loan.recipient.id}</a> ({loan.amount} rDai)</li>
 													)
 												}
 												</ul>
@@ -67,7 +67,7 @@ class SideView extends React.Component
 												<ul>
 												{
 													this.state.data.loansReceived.map(loan =>
-															<li>Owner: {loan.owner.id} ({loan.amount} rDai)</li>
+														<li>Owner: <a href="#" onClick={() => { this.props.emitter.emit('goTo', `/nodeview/${loan.owner.id}`) }}>{loan.owner.id}</a> ({loan.amount} rDai)</li>
 													)
 												}
 												</ul>
@@ -84,4 +84,4 @@ class SideView extends React.Component
 	}
 }
 
-export default SideView;
+export default OverviewModal;
