@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route, Redirect } from 'react-router-dom';
-import { createBrowserHistory as createHistory } from 'history'
-// import { createMemoryHistory as createHistory } from 'history'
+// import { createBrowserHistory as createHistory } from 'history'
+import { createMemoryHistory as createHistory } from 'history'
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient   } from 'apollo-client';
 import { InMemoryCache  } from 'apollo-cache-inmemory';
