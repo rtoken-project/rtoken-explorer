@@ -39,10 +39,12 @@ const Overview = (props) => {
 	}
 
 	// format data
+	/*
 	const totalValue = [
 		...data.account.loansOwned.map(l => parseFloat(l.amount)),
 		...data.account.loansReceived.map(l => parseFloat(l.amount)),
 	].reduce((x,y) => x+y, 0);
+	*/
 
 	const ownedValue = {}, receivedValue = {};
 	for (const loan of data.account.loansOwned)
@@ -85,25 +87,25 @@ const Overview = (props) => {
 			source: data.account.id,
 			target: id,
 			label:  `${value} rDai`,
-			size:   10 * value / totalValue,
+			size:   value,
 		})),
 		...Object.entries(receivedValue).map(([id, value]) => ({
 			source: id,
 			target: data.account.id,
 			label:  `${value} rDai`,
-			size:   10 * value / totalValue,
+			size:   value,
 		})),
 		...data.account.loansReceived.filter(l => l.owner.id !== data.account.id).map(l => ({
 			source: l.owner.id,
 			target: l.hat ? l.hat.id : 0,
 			label:  `${l.amount} rDai`,
-			size:   10 * l.amount / totalValue,
+			size:   l.amount,
 		})),
 		...data.account.loansOwned.map   (l => ({
 			source: l.hat ? l.hat.id : 0,
 			target: l.recipient.id,
 			label:  `${l.amount} rDai`,
-			size:   10 * l.amount / totalValue,
+			size:   l.amount,
 		})),
 	];
 
@@ -111,16 +113,18 @@ const Overview = (props) => {
 	return (
 		<>
 			<ForceGraph2D
-				graphData                = {{ nodes, links }}
-				nodeLabel                = { n => n.label }
-				nodeVal                  = { n => n.size }
-				nodeAutoColorBy          = { n => n.group }
-				linkLabel                = { n => n.label }
-				linkWidth                = { l => l.size }
-				linkDirectionalParticles = { 3 }
-				linkCurvature            = { 0.5 }
-				onNodeClick              = { (node) => handleClick(node) }
-				backgroundColor          = "#FFFFFF"
+				graphData                    = {{ nodes, links }}
+				nodeLabel                    = { n => n.label }
+				nodeVal                      = { n => n.size }
+				nodeAutoColorBy              = { n => n.group }
+				linkLabel                    = { n => n.label }
+				linkWidth                    = { l => Math.log(1+l.size) }
+				linkDirectionalParticles     = { l => Math.log(1+l.size) }
+				linkDirectionalParticleWidth = { l => Math.log(1+Math.log(1+l.size)) }
+				linkDirectionalParticles     = { 3 }
+				linkCurvature                = { 0.5 }
+				onNodeClick                  = { (node) => handleClick(node) }
+				backgroundColor              = "#FFFFFF"
 			/>;
 		</>
 	);
