@@ -101,7 +101,7 @@ const Overview = (props) => {
 			label:  `${l.amount} rDai`,
 			size:   l.amount,
 		})),
-		...data.account.loansOwned.filter(l => l.recipient.id !== data.account.id).map   (l => ({
+		...data.account.loansOwned.filter(l => l.recipient.id !== data.account.id).map(l => ({
 			source: l.hat ? l.hat.id : "0",
 			target: l.recipient.id,
 			label:  `${l.amount} rDai`,
@@ -118,7 +118,7 @@ const Overview = (props) => {
 				nodeVal                      = { n => n.size }
 				nodeAutoColorBy              = { n => n.group }
 				linkLabel                    = { n => n.label }
-				linkWidth                    = { l => Math.log(1+l.size) }
+				// linkWidth                    = { l => Math.log(1+l.size) }
 				linkDirectionalParticles     = { l => Math.log(1+l.size) }
 				linkDirectionalParticleWidth = { l => Math.log(1+Math.log(1+l.size)) }
 				linkDirectionalParticles     = { 3 }
