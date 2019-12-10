@@ -72,8 +72,8 @@ const Overview = (props) => {
 			size:    id === data.account.id ? 3    : 2,
 		})),
 		...[...new Set([
-			...data.account.loansReceived.map(l => l.hat ? l.hat.id : 0),
-			...data.account.loansOwned.map   (l => l.hat ? l.hat.id : 0),
+			...data.account.loansReceived.map(l => l.hat ? l.hat.id : "0"),
+			...data.account.loansOwned.map   (l => l.hat ? l.hat.id : "0"),
 		])].map(id => ({
 			id:      id,
 			label:   `hat ${id}`,
@@ -97,12 +97,12 @@ const Overview = (props) => {
 		})),
 		...data.account.loansReceived.filter(l => l.owner.id !== data.account.id).map(l => ({
 			source: l.owner.id,
-			target: l.hat ? l.hat.id : 0,
+			target: l.hat ? l.hat.id : "0",
 			label:  `${l.amount} rDai`,
 			size:   l.amount,
 		})),
-		...data.account.loansOwned.map   (l => ({
-			source: l.hat ? l.hat.id : 0,
+		...data.account.loansOwned.filter(l => l.recipient.id !== data.account.id).map   (l => ({
+			source: l.hat ? l.hat.id : "0",
 			target: l.recipient.id,
 			label:  `${l.amount} rDai`,
 			size:   l.amount,
