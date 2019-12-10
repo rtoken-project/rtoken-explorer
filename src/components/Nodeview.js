@@ -121,7 +121,6 @@ const Overview = (props) => {
 				// linkWidth                    = { l => Math.log(1+l.size) }
 				linkDirectionalParticles     = { l => Math.log(1+l.size) }
 				linkDirectionalParticleWidth = { l => Math.log(1+Math.log(1+l.size)) }
-				linkDirectionalParticles     = { 3 }
 				linkCurvature                = { 0.5 }
 				onNodeClick                  = { (node) => handleClick(node) }
 				backgroundColor              = "#FFFFFF"
