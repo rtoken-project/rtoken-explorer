@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router, Route, Redirect } from 'react-router-dom';
-import { createMemoryHistory } from 'history'
+import { createBrowserHistory as createHistory } from 'history'
+// import { createMemoryHistory as createHistory } from 'history'
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient   } from 'apollo-client';
 import { InMemoryCache  } from 'apollo-cache-inmemory';
@@ -16,7 +17,7 @@ import config from '../config';
 class App extends React.Component
 {
 	state = {
-		history: createMemoryHistory(),
+		history: createHistory(),
 		emitter: new EventEmitter(),
 		client:  null,
 	}

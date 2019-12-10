@@ -10,6 +10,10 @@ query node($address: String)
 		loansOwned(where: { amount_gt: 0 })
 		{
 			amount
+			owner
+			{
+				id
+			}
 			recipient
 			{
 				id
@@ -23,6 +27,10 @@ query node($address: String)
 		{
 			amount
 			owner
+			{
+				id
+			}
+			recipient
 			{
 				id
 			}
