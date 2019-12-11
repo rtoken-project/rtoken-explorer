@@ -53,6 +53,10 @@ const OverviewGraph = (props) => {
 		}
 	}, [state, viewZoom, viewReset]);
 
+	const handleRightClick = React.useCallback(node => {
+		window.location.href = `https://etherscan.io/address/${node.id}`
+	}, []);
+
 	// render
 	return <ForceGraph3D
 		ref                               = { fgRef }
@@ -69,6 +73,7 @@ const OverviewGraph = (props) => {
 		linkDirectionalParticleWidth      = { l => Math.log(1+Math.log(1+l.amount)) }
 		linkDirectionalParticleResolution = { 8 }
 		onNodeClick                       = { (node) => handleClick(node) }
+		onNodeRightClick                  = { (node) => handleRightClick(node) }
 		onLinkClick                       = { (link) => handleClick(null) }
 		onBackgroundClick                 = { ()     => handleClick(null) }
 		backgroundColor                   = "#111111"

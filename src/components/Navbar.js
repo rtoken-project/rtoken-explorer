@@ -1,4 +1,5 @@
 import React from 'react';
+import { ethers } from 'ethers';
 import {
 	MDBIcon,
 	MDBNavbar,
@@ -37,8 +38,19 @@ class Navbar extends React.Component
 	submit(event)
 	{
 		event.preventDefault();
-		const address = this.state.search; // TODO: verify address / resolve ENS
-		this.props.emitter.emit('goTo', `/nodeview/${address}`);
+
+		ethers.getDefaultProvider('mainnet').resolveName(this.state.search)
+		.then(address => {
+			if (address)
+			{
+				this.props.emitter.emit('goTo', `/nodeview/${address.toLowerCase()}`);
+			}
+			else
+			{
+				console.erro(`'${this.state.search}' is not a valid address`);
+			}
+		})
+		.catch(console.error)
 	}
 
 	render()

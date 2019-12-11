@@ -16,6 +16,13 @@ const Overview = (props) => {
 		}
 	}, [props]);
 
+	const handleRightClick = React.useCallback(node => {
+		if (node.address)
+		{
+			window.location.href = `https://etherscan.io/address/${node.address}`
+		}
+	}, []);
+
 	// Query subgraph
 	const { data, loading, error } = useQuery(
 		graphql.viewNode,
@@ -46,68 +53,82 @@ const Overview = (props) => {
 	].reduce((x,y) => x+y, 0);
 	*/
 
-	const ownedValue = {}, receivedValue = {};
-	for (const loan of data.account.loansOwned)
+	let nodes, links;
+	if (data.account)
 	{
-		ownedValue[loan.hat ? loan.hat.id : 0] |= 0;
-		ownedValue[loan.hat ? loan.hat.id : 0] += parseFloat(loan.amount);
-	}
+		const ownedValue = {}, receivedValue = {};
+		for (const loan of data.account.loansOwned)
+		{
+			ownedValue[loan.hat ? loan.hat.id : 0] |= 0;
+			ownedValue[loan.hat ? loan.hat.id : 0] += parseFloat(loan.amount);
+		}
 
-	for (const loan of data.account.loansReceived)
+		for (const loan of data.account.loansReceived)
+		{
+			receivedValue[loan.hat ? loan.hat.id : 0] |= 0;
+			receivedValue[loan.hat ? loan.hat.id : 0] += parseFloat(loan.amount);
+		}
+
+		nodes = [
+			...[...new Set([
+				data.account.id,
+				...data.account.loansReceived.map(l => l.owner.id),
+				...data.account.loansOwned.map   (l => l.recipient.id),
+			])].map(id => ({
+				id:      id,
+				label:   id,
+				address: id,
+				color:   id === data.account.id ? null : "#444444",
+				size:    id === data.account.id ? 3    : 2,
+			})),
+			...[...new Set([
+				...data.account.loansReceived.map(l => l.hat ? l.hat.id : "0"),
+				...data.account.loansOwned.map   (l => l.hat ? l.hat.id : "0"),
+			])].map(id => ({
+				id:      id,
+				label:   `hat ${id}`,
+				color:   "#888888",
+				size:    1,
+			})),
+		];
+
+		links = [
+			...Object.entries(ownedValue).map(([id, value]) => ({
+				source: data.account.id,
+				target: id,
+				label:  `${value} rDai`,
+				size:   value,
+			})),
+			...Object.entries(receivedValue).map(([id, value]) => ({
+				source: id,
+				target: data.account.id,
+				label:  `${value} rDai`,
+				size:   value,
+			})),
+			...data.account.loansReceived.filter(l => l.owner.id !== data.account.id).map(l => ({
+				source: l.owner.id,
+				target: l.hat ? l.hat.id : "0",
+				label:  `${l.amount} rDai`,
+				size:   l.amount,
+			})),
+			...data.account.loansOwned.filter(l => l.recipient.id !== data.account.id).map(l => ({
+				source: l.hat ? l.hat.id : "0",
+				target: l.recipient.id,
+				label:  `${l.amount} rDai`,
+				size:   l.amount,
+			})),
+		];
+	}
+	else
 	{
-		receivedValue[loan.hat ? loan.hat.id : 0] |= 0;
-		receivedValue[loan.hat ? loan.hat.id : 0] += parseFloat(loan.amount);
+		nodes = [{
+			id:      props.match.params.address,
+			label:   props.match.params.address,
+			address: props.match.params.address,
+			size:    3
+		}];
+		links = [];
 	}
-
-	const nodes = [
-		...[...new Set([
-			data.account.id,
-			...data.account.loansReceived.map(l => l.owner.id),
-			...data.account.loansOwned.map   (l => l.recipient.id),
-		])].map(id => ({
-			id:      id,
-			label:   id,
-			address: id,
-			color:   id === data.account.id ? null : "#444444",
-			size:    id === data.account.id ? 3    : 2,
-		})),
-		...[...new Set([
-			...data.account.loansReceived.map(l => l.hat ? l.hat.id : "0"),
-			...data.account.loansOwned.map   (l => l.hat ? l.hat.id : "0"),
-		])].map(id => ({
-			id:      id,
-			label:   `hat ${id}`,
-			color:   "#888888",
-			size:    1,
-		})),
-	];
-
-	const links = [
-		...Object.entries(ownedValue).map(([id, value]) => ({
-			source: data.account.id,
-			target: id,
-			label:  `${value} rDai`,
-			size:   value,
-		})),
-		...Object.entries(receivedValue).map(([id, value]) => ({
-			source: id,
-			target: data.account.id,
-			label:  `${value} rDai`,
-			size:   value,
-		})),
-		...data.account.loansReceived.filter(l => l.owner.id !== data.account.id).map(l => ({
-			source: l.owner.id,
-			target: l.hat ? l.hat.id : "0",
-			label:  `${l.amount} rDai`,
-			size:   l.amount,
-		})),
-		...data.account.loansOwned.filter(l => l.recipient.id !== data.account.id).map(l => ({
-			source: l.hat ? l.hat.id : "0",
-			target: l.recipient.id,
-			label:  `${l.amount} rDai`,
-			size:   l.amount,
-		})),
-	];
 
 	// render
 	return (
@@ -123,6 +144,7 @@ const Overview = (props) => {
 				linkDirectionalParticleWidth = { l => Math.log(1+Math.log(1+l.size)) }
 				linkCurvature                = { 0.5 }
 				onNodeClick                  = { (node) => handleClick(node) }
+				onNodeRightClick             = { (node) => handleRightClick(node) }
 				backgroundColor              = "#FFFFFF"
 			/>;
 		</>
