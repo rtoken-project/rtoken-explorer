@@ -8,6 +8,7 @@ import { InMemoryCache  } from 'apollo-cache-inmemory';
 import { HttpLink       } from 'apollo-link-http';
 import { EventEmitter } from 'fbemitter';
 
+import About    from './About';
 import Navbar   from './Navbar';
 import Overview from './Overview';
 import Nodeview from './Nodeview';
@@ -57,7 +58,7 @@ class App extends React.Component
 				<Router history={this.state.history}>
 					<Navbar emitter={this.state.emitter} networks={config.networks} />
 					<Redirect from="/" to="/overview" />
-					<Route exact path="/about-us"          render={ (props) => <div className='core'>About us</div> } />
+					<Route exact path="/about-us"          render={ (props) => <About    emitter={this.state.emitter} {...props}/> } />
 					<Route exact path="/overview"          render={ (props) => <Overview emitter={this.state.emitter} {...props}/> } />
 					<Route exact path="/nodeview/:address" render={ (props) => <Nodeview emitter={this.state.emitter} {...props}/> } />
 				</Router>

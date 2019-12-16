@@ -38,6 +38,9 @@ body
 .core
 {
 	padding-top:      58px;
+	height:           100vh;
+	color:            #4F4F4F;
+	background-color: #FFFFFF;
 }
 
 .modal
