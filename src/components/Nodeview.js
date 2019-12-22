@@ -12,7 +12,6 @@ const Overview = (props) => {
 	const handleClick = React.useCallback(node => {
 		if (node.address)
 		{
-			console.log(props)
 			props.emitter.emit('goTo', `/${props.network}/nodeview/${node.address}`);
 		}
 	}, [props]);
