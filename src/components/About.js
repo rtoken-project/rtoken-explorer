@@ -4,7 +4,6 @@ import croubois from '../assets/croubois.png';
 
 class Navbar extends React.Component
 {
-							// <h5 className='grey-text'>Research Engineer & Ethereum Magician</h5>
 	render()
 	{
 		return (

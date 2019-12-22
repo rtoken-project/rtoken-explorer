@@ -43,7 +43,7 @@ class Navbar extends React.Component
 		.then(address => {
 			if (address)
 			{
-				this.props.emitter.emit('goTo', `/nodeview/${address.toLowerCase()}`);
+				this.props.emitter.emit('goTo', `/${this.props.network}/nodeview/${address.toLowerCase()}`);
 			}
 			else
 			{
@@ -67,10 +67,10 @@ class Navbar extends React.Component
 				<MDBCollapse id='navbarCollapse' isOpen={this.state.isOpen} navbar>
 					<MDBNavbarNav left>
 						<MDBNavItem>
-							<MDBNavLink link to='/Overview'>Overview</MDBNavLink>
+							<MDBNavLink link to={`/${this.props.network}/Overview`}>Overview</MDBNavLink>
 						</MDBNavItem>
 						<MDBNavItem>
-							<MDBNavLink link to='/about-us'>About Us</MDBNavLink>
+							<MDBNavLink link to={`/${this.props.network}/about-us`}>About Us</MDBNavLink>
 						</MDBNavItem>
 					</MDBNavbarNav>
 					<MDBNavbarNav right>
@@ -88,7 +88,7 @@ class Navbar extends React.Component
 								</MDBDropdownToggle>
 								<MDBDropdownMenu className="dropdown-default">
 									{
-										Object.entries(this.props.networks).map(([key, value]) =>
+										Object.entries(this.props.config.networks).map(([key, value]) =>
 											<MDBDropdownItem
 												key={key}
 												href="#!"

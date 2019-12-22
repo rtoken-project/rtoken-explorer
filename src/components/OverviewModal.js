@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 
 class OverviewModal extends React.Component
@@ -43,7 +44,7 @@ class OverviewModal extends React.Component
 							</Modal.Header>
 							<Modal.Body>
 								<ul>
-									<li>Address: <a href="#" onClick={() => { this.props.emitter.emit('goTo', `/nodeview/${this.state.data.id}`) }}>{ this.state.data.id }</a></li>
+									<li>Address: <Link to={`/${this.props.network}/nodeview/${this.state.data.id}`}>{ this.state.data.id }</Link></li>
 									<li>Balance: { this.state.data.balance }</li>
 									<li>Hat:     { this.state.data.hat ? this.state.data.hat.id : 'unset' }</li>
 									{
@@ -52,8 +53,8 @@ class OverviewModal extends React.Component
 											<li>Loans Owner:
 												<ul>
 												{
-													this.state.data.loansOwned.map(loan =>
-														<li>Recipient: <a href="#" onClick={() => { this.props.emitter.emit('goTo', `/nodeview/${loan.recipient.id}`) }}>{loan.recipient.id}</a> ({loan.amount} rDai)</li>
+													this.state.data.loansOwned.map((loan, i) =>
+														<li key={i}>Recipient: <Link to={`/${this.props.network}/nodeview/${loan.recipient.id}`}>{loan.recipient.id}</Link> ({loan.amount} rDai)</li>
 													)
 												}
 												</ul>
@@ -66,8 +67,8 @@ class OverviewModal extends React.Component
 											<li>Loans Received:
 												<ul>
 												{
-													this.state.data.loansReceived.map(loan =>
-														<li>Owner: <a href="#" onClick={() => { this.props.emitter.emit('goTo', `/nodeview/${loan.owner.id}`) }}>{loan.owner.id}</a> ({loan.amount} rDai)</li>
+													this.state.data.loansReceived.map((loan, i) =>
+														<li key={i}>Owner: <Link to={`/${this.props.network}/nodeview/${loan.owner.id}`}>{loan.owner.id}</Link> ({loan.amount} rDai)</li>
 													)
 												}
 												</ul>

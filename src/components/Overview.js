@@ -40,10 +40,16 @@ const Overview = (props) => {
 		<>
 			<OverviewGraph
 				data    = {{ nodes, links }}
-				emitter = { props.emitter }
+				emitter = {props.emitter}
+				network = {props.network}
+				config  = {props.config}
+				routing = {props.routing}
 			/>
 			<OverviewModal
-				emitter = { props.emitter }
+				emitter = {props.emitter}
+				network = {props.network}
+				config  = {props.config}
+				routing = {props.routing}
 			/>
 		</>
 	);

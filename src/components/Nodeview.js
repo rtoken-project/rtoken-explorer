@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { ForceGraph2D } from 'react-force-graph';
 
 // TODO NodeviewGraph
-import Loading       from './Loading';
+import Loading from './Loading';
 
 import graphql from '../graphql';
 
@@ -12,7 +12,8 @@ const Overview = (props) => {
 	const handleClick = React.useCallback(node => {
 		if (node.address)
 		{
-			props.emitter.emit('goTo', `/nodeview/${node.address}`);
+			console.log(props)
+			props.emitter.emit('goTo', `/${props.network}/nodeview/${node.address}`);
 		}
 	}, [props]);
 
@@ -29,7 +30,7 @@ const Overview = (props) => {
 		{
 			variables:
 			{
-				address: props.match.params.address
+				address: props.routing.match.params.address
 			}
 		}
 	);
