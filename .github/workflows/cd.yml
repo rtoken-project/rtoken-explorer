@@ -72,7 +72,7 @@ jobs:
       - name: deploy to s3
         run: |
           aws s3 sync --acl public-read --delete build/ s3://explorer.rtoken.money
-          aws cloudfront create-invalidation --buildribution-id E28BQ4T23W5MAW --paths '/*'
+          aws cloudfront create-invalidation --distribution-id E28BQ4T23W5MAW --paths '/*'
         env:
           AWS_DEFAULT_REGION: eu-central-1
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
